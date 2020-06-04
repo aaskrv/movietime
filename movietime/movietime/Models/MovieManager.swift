@@ -100,9 +100,6 @@ struct MovieManager {
             }
             
         }
-        //print(categoryMovies.count)
-        
-        //return categoryMovies
     }
     
     

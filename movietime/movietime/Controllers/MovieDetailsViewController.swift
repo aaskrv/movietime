@@ -18,6 +18,11 @@ class MovieDetailsViewController: UITableViewController, MovieManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        movieManager.delegate = self
+        
+        self.navigationController?.navigationBar.tintColor = .black
+        
         tableView.register(UINib(nibName: K.DetailsCells.movieDetailsCellNibName, bundle: nil), forCellReuseIdentifier: K.DetailsCells.movieDetailsCell)
         
         tableView.register(UINib(nibName: K.MoviesCells.categoryCellNibName, bundle: nil), forCellReuseIdentifier: K.MoviesCells.categoryCell)
@@ -26,20 +31,14 @@ class MovieDetailsViewController: UITableViewController, MovieManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        movieManager.delegate = self
-        
         if let id = movieId {
             movieManager.fetchMovie(with: id)
         }
-        
-        self.navigationController?.navigationBar.tintColor = .black
     }
 
     func didFetchMovieDetails(with resultDetails: Movie) {
         movie = resultDetails
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -51,6 +50,8 @@ class MovieDetailsViewController: UITableViewController, MovieManagerDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: K.DetailsCells.movieDetailsCell, for: indexPath) as! MovieDetailsCell
+            
+            cell.selectionStyle = .none
             
             cell.titleLabel.text = movie?.title
             cell.genresLabel.text = movie?.getGenresList()
@@ -80,6 +81,8 @@ class MovieDetailsViewController: UITableViewController, MovieManagerDelegate {
             cell.isCast = true
             cell.movieId = movieId
 
+            cell.selectionStyle = .none
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: K.MoviesCells.categoryCell, for: indexPath) as! CategoryCell
@@ -89,6 +92,8 @@ class MovieDetailsViewController: UITableViewController, MovieManagerDelegate {
             cell.isRecommend = true
             cell.movieId = movieId
             cell.newViewController = self
+            
+            cell.selectionStyle = .none
 
             return cell
         }

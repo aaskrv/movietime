@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Movie: MovieManagerDelegate {
+struct Movie {
     var id: Int?
     var title: String?
     var posterPath: String?

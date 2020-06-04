@@ -19,23 +19,23 @@ class SearchViewController: UITableViewController, MovieManagerDelegate, UISearc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchBar.delegate = self
         movieManager.delegate = self
+        searchBar.delegate = self
+        
+        tableView.keyboardDismissMode = .onDrag
         
         tableView.register(UINib(nibName: K.MoviesCells.movieCellNibName, bundle: nil), forCellReuseIdentifier: K.MoviesCells.movieCell)
     }
 
     func didFetchMovies(with result: [Movie]) {
         results = result
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return results.count
     }
 
@@ -65,7 +65,6 @@ class SearchViewController: UITableViewController, MovieManagerDelegate, UISearc
         performSegue(withIdentifier: K.Segues.movieFromSearch, sender: id)
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? MovieDetailsViewController {
             if let sender = sender as? Int {
@@ -79,18 +78,12 @@ class SearchViewController: UITableViewController, MovieManagerDelegate, UISearc
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
+        searchBar.endEditing(true)
+        
         if let searchText = searchBar.text {
             movieManager.searchMovie(with: searchText)
         }
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
         searchBar.text = ""
-
-        results = [Movie]()
-
-        searchBar.endEditing(true)
-
-        tableView.reloadData()
     }
 }

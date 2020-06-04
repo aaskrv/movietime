@@ -32,10 +32,12 @@ class CategoryCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewD
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         movieManager.delegate = self
+        
+        showAllButton.isHidden = true
         
         self.collectionView.register(UINib.init(nibName: K.MoviesCells.movieCollectionCellNibName, bundle: nil), forCellWithReuseIdentifier: K.MoviesCells.movieCollectionCell)
     }

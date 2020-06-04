@@ -24,16 +24,11 @@ class GenresViewController: UITableViewController, MovieManagerDelegate {
         movieManager.delegate = self
         
         movieManager.fetchGenres()
-//        print("🦷 genres fetched")
     }
     
     func didFetchGenres(with allGenres: [(Int, String)]) {
         genres = allGenres
-//        print("🧠 GENRES:")
-//        print(genres)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -49,8 +44,9 @@ class GenresViewController: UITableViewController, MovieManagerDelegate {
         cell.genreId = genres[indexPath.row].0
         cell.lastLabel.isHidden = true
         cell.newViewController = self
+        
+        cell.selectionStyle = .none
 
         return cell
     }
-
 }

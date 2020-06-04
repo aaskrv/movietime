@@ -17,9 +17,7 @@ class MoviesViewController: UITableViewController, MovieManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+        
         tableView.register(UINib(nibName: K.MoviesCells.categoryCellNibName, bundle: nil), forCellReuseIdentifier: K.MoviesCells.categoryCell)
         
         tableView.register(UINib(nibName: K.MoviesCells.movieCellNibName, bundle: nil), forCellReuseIdentifier: K.MoviesCells.movieCell)
@@ -28,18 +26,15 @@ class MoviesViewController: UITableViewController, MovieManagerDelegate {
         
         movieManager.fetchCategory(for: Query.nowPlaying.rawValue)
     }
-    
     func didFetchMovies(with result: [Movie]) {
         nowPlayingMovies = result
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        
         return nowPlayingMovies.count + 2
     }
 
@@ -54,6 +49,8 @@ class MoviesViewController: UITableViewController, MovieManagerDelegate {
             cell.lastLabel.isHidden = true
             cell.newViewController = self
 
+            cell.selectionStyle = .none
+            
             return cell
             
         } else if indexPath.row == 1 {
@@ -63,6 +60,8 @@ class MoviesViewController: UITableViewController, MovieManagerDelegate {
             cell.cellCategory = "upcoming"
             cell.newViewController = self
 
+            cell.selectionStyle = .none
+            
             return cell
             
         } else {
@@ -93,16 +92,11 @@ class MoviesViewController: UITableViewController, MovieManagerDelegate {
         }
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
         if let vc = segue.destination as? MovieDetailsViewController {
             if let sender = sender as? Int {
                 vc.movieId = sender
             }
         }
-        
     }
-
 }
