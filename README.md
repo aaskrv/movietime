@@ -1,5 +1,5 @@
 # movietime
-The Movie DB client done for testing purposes
+The [Movie DB](https://www.themoviedb.org) client done as a test task
 
 ## Getting Started
 
@@ -29,6 +29,4 @@ Distributed under the MIT License.
 
 ## Contact
 
-Adilet Askerov - [@LinkedIn](https://http://linkedin.com/in/adiletaskerov/) - adilet.askerov@nu.edu.kz
-
-Project Link: [https://github.com/aaskrv/movietime](https://github.com/aaskrv/movietime)
+Adilet Askerov - [@LinkedIn](https://http://linkedin.com/in/adiletaskerov/) - adlet.askerov98@gmail.com
